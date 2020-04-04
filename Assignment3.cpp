@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "Assignment3.h"
 
 using namespace std;
