@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include "GenStack.h"
+#include "FileNotFoundException.h"
 
 using namespace std;
 
@@ -7,5 +10,9 @@ class delimiter{
     delimiter();
     ~delimiter();
 
-    int checkDelimiters(string userFile);
-}
+    string inputFile;
+    char first;
+    int lineCount;
+
+    int checkDelimiters();
+};

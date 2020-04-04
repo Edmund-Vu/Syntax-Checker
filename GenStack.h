@@ -1,100 +1,98 @@
 #include <iostream>
-#include <stack>
 #include <string>
+#include "EmptyStackException.h"
 
 using namespace std;
 
 template <class T>
-class GenStack {
-    private:
-
+class GenStack{
     public:
+        GenStack();
         GenStack(int maxsize);
         ~GenStack();
 
         void push(T data);
         T pop();
-        T peek();
+        T topStack();
         bool isFull();
         bool isEmpty();
+        int getSize();
         void increaseSize();
 
         int top;
-        int max;
+        int size;
 
         T *myArray;
-        T *tempArray;
 };
 
 template <class T>
-GenStack<T>::GenStack(int maxsize){
-    myArray = new T[maxsize];
-    max = maxsize;
+GenStack<T>::GenStack(){
+    myArray = new T[256];
     top = -1;
-    tempArray = new T[max];
+}
+
+template <class T>
+GenStack<T>::GenStack(int maxSize){
+  myArray = new T[maxSize];
+  size = maxSize;
+  top = -1;
 }
 
 template <class T>
 GenStack<T>::~GenStack(){
     delete []myArray;
-    delete []tempArray;
-
 }
 
 template <class T>
 void GenStack<T>::push(T data){
-    if (isFull()) {
-        increaseSize();
-        push(data);
-    }
-    else {
-        myArray[++top] = data;
-    }
+  if(isFull()){
+    increaseSize();
+  }
+  myArray[++top] = data;
 }
 
 template <class T>
 T GenStack<T>::pop(){
-    if (isEmpty()){
-        cout << "ERROR: current stack is empty" << endl;
-        return 0;
-    }
-    else {
-        return myArray[top--];
-    }
+  if(isEmpty()){
+    throw EmptyStackException();
+  }
+  return myArray[top--];
 }
 
 template <class T>
-T GenStack<T>::peek(){
-    if (top == -1){
-        return 0;
-    }
-    else {
-        return myArray[top];
-    }
+T GenStack<T>::topStack(){
+  if(isEmpty()){
+    throw EmptyStackException();
+  }
+  return myArray[top];
 }
 
 template <class T>
 bool GenStack<T>::isFull(){
-    return (top == max-1);
+  return(top == size-1);
 }
 
 template <class T>
 bool GenStack<T>::isEmpty(){
-    return (top == -1);
+  return (top == -1);
+}
+
+template <class T>
+int GenStack<T>::getSize(){
+  return top + 1;
 }
 
 template <class T>
 void GenStack<T>::increaseSize(){
-    tempArray = new T[max];
-
-    for (int i = top; i > -1; --i){
-        tempArray[i] = myArray[i];
+    T* tempArray = new T[2*size];
+    for(int i = 0; i < size; ++i){
+      tempArray[i] = myArray[i];
     }
-
-    max += 1;
-    myArray = new T[max];
-
-    for (int i = top; i > -1; --i){
-        myArray[i] = tempArray[i];
+    delete myArray;
+    T* myArray = new T[2*size];
+    for(int i = 0; i < size; ++i){
+      myArray[i] = tempArray[i];
     }
+    delete tempArray;
+    size = 2 * size;
 }
