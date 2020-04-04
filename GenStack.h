@@ -25,6 +25,7 @@ class GenStack{
         T *myArray;
 };
 
+// Default Constructor
 template <class T>
 GenStack<T>::GenStack(){
     myArray = new T[256];
@@ -38,11 +39,13 @@ GenStack<T>::GenStack(int maxSize){
   top = -1;
 }
 
+// Destructor
 template <class T>
 GenStack<T>::~GenStack(){
     delete []myArray;
 }
 
+// Adds elements to the stack
 template <class T>
 void GenStack<T>::push(T data){
   if(isFull()){
@@ -51,6 +54,7 @@ void GenStack<T>::push(T data){
   myArray[++top] = data;
 }
 
+// Removes the top element of the stack if the stack isn't empty
 template <class T>
 T GenStack<T>::pop(){
   if(isEmpty()){
@@ -59,6 +63,7 @@ T GenStack<T>::pop(){
   return myArray[top--];
 }
 
+// Returns the top element of the stack if the stack isn't empty
 template <class T>
 T GenStack<T>::topStack(){
   if(isEmpty()){
@@ -67,21 +72,25 @@ T GenStack<T>::topStack(){
   return myArray[top];
 }
 
+// Returns a boolean indicating whether the stack is full or not
 template <class T>
 bool GenStack<T>::isFull(){
   return(top == size-1);
 }
 
+// Returns a boolean indicating whether the stack is full or not
 template <class T>
 bool GenStack<T>::isEmpty(){
   return (top == -1);
 }
 
+// Returns the current size of the stack
 template <class T>
 int GenStack<T>::getSize(){
   return top + 1;
 }
 
+// Increases the size of the stack 
 template <class T>
 void GenStack<T>::increaseSize(){
     T* tempArray = new T[2*size];
