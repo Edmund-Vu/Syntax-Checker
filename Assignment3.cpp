@@ -41,10 +41,38 @@ int delimiter::checkDelimiters(){
         throw EmptyStackException();
       }
       if(first == '(' && c != ')'){
-        cout << "on line " << lineCount << ":expected ) and found " << c << endl;
+        cout << "On line " << lineCount << ":expected ) and found " << c << endl;
         stack.~GenStack();
         exit(0);
       }
+      else if(first == '[' && c != ']'){
+        cout << "On line " << lineCount << ":expected ] and found " << c << endl;
+        stack.~GenStack();
+        exit(0);
+      }
+      else if(first == '{' && c != '}'){
+        cout << "On line " << lineCount << ":expected } and found " << c << endl;
+        stack.~GenStack();
+        exit(0);
+      }
+      stack.pop();
     }
+  }
+  iStream.close();
+  if(stack.isEmpty()){
+    cout << "The code is error-free." << endl;
+  }
+  first = stack.topStack();
+  if(first == '('){
+    cout << "End of file reached, expected )" << endl;
+    exit(0);
+  }
+  else if(first == '['){
+    cout << "End of file reached, expected ]" << endl;
+    exit(0);
+  }
+  else if(first == '{'){
+    cout << "End of file reached, expected }" << endl;
+    exit(0);
   }
 }
