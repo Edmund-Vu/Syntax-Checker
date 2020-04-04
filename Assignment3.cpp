@@ -19,17 +19,20 @@ int delimiter::checkDelimiters(){
   iStream.open(inputFile);
   char c;
   int line = 1;
-
+  // Check if the file exists
   if(!iStream){
     throw FileNotFoundException();
   }
 
+  // Read through each character in the file
   while(!iStream.eof()){
     iStream >> noskipws >> c;
     if(c == '(' || c == '[' || c == '{'){
+      // Push the starting delimiters onto the stack
       stack.push(c);
     }
     else if(c == '\n'){
+      // Keeps track of what line we're on so we can use it to write error messages
       ++lineCount;
     }
     else if(c == ')' || c == ']' || c == '}'){
